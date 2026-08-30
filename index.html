@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Menu Ultra v11.0</title>
+    <style>
+        body { font-family: monospace; background: #06070d; color: #00ffcc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; }
+        .panel { background: #0d0f17; padding: 25px; border-radius: 12px; border: 2px solid #00ffcc; width: 340px; box-shadow: 0 0 20px rgba(0,255,204,0.2); }
+        .title-box { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 15px; border-bottom: 2px solid #00ffcc; padding-bottom: 10px; }
+        .logo-img { width: 35px; height: 35px; object-fit: cover; border-radius: 6px; border: 1px solid #00ffcc; }
+        .title { font-size: 22px; font-weight: bold; letter-spacing: 3px; text-shadow: 0 0 10px #00ffcc; }
+        .cat { font-size: 11px; color: #ffa300; font-weight: bold; margin: 15px 0 5px; text-transform: uppercase; }
+        .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 5px 0; border-bottom: 1px dashed rgba(0,255,204,0.1); }
+        .info { display: flex; gap: 10px; font-size: 13px; font-weight: bold; }
+        .status { font-size: 11px; color: #444; }
+        .sw { position: relative; width: 50px; height: 22px; cursor: pointer; }
+        .sw input { opacity: 0; width: 0; height: 0; }
+        .sd { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: #1a1d29; border: 1px solid #333; transition: .3s; }
+        .sd:after { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background: #444; transition: .3s; }
+        input:checked + .sd:after { transform: translateX(28px); background-color: var(--clr) !important; }
+        .sl-box { display: flex; flex-direction: column; margin-top: 15px; margin-bottom: 20px; }
+        .sl-hd { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; font-weight: bold; }
+        .sl { -webkit-appearance: none; width: 100%; height: 5px; background: #1a1d29; border: 1px solid #333; outline: none; }
+        .sl::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: #ffa300; cursor: pointer; box-shadow: 0 0 5px #ffa300; }
+        
+        /* Cập nhật cấu trúc nút bấm có chứa icon ảnh */
+        .btn-ff { 
+            width: 100%; 
+            background: linear-gradient(135deg, #ff5500, #ff2200); 
+            color: #fff; 
+            border: 1px solid #ffaa00; 
+            padding: 10px 12px; 
+            font-family: monospace; 
+            font-size: 14px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            cursor: pointer; 
+            border-radius: 6px; 
+            box-shadow: 0 0 10px rgba(255,34,0,0.4); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+        }
+        /* Style cho icon hình ảnh Free Fire */
+        .btn-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="panel">
+        <div class="title-box">
+            <img src="data:image/svg+xml;utf8,<svg xmlns='https://ibb.co/ym03bZbS' viewBox='0 0 24 24' fill='none' stroke='%2300ffcc' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='10'></circle><line x1='22' y1='12' x2='18' y2='12'></line><line x1='6' y1='12' x2='2' y2='12'></line><line x1='12' y1='6' x2='12' y2='2'></line><line x1='12' y1='22' x2='12' y2='18'></line></svg>" class="logo-img" alt="Logo">
+            <div class="title">HACK MENU v10.4</div>
+        </div>
+        
+        <div id="menu-content"></div>
+        
+        <div class="sl-box">
+            <div class="sl-hd"><span>SENSITIVITY</span><span id="sv" style="color:#ffa300">50%</span></div>
+            <input type="range" min="0" max="100" value="50" class="sl" id="box-sl">
+        </div>
+
+        <!-- Thêm thẻ img chứa liên kết ảnh trực tiếp từ ImgBB của bạn vào đây -->
+        <button class="btn-ff" id="btnOpenFF">
+            <img src="https://ibb.co" class="btn-icon" alt="FF Icon">
+            <span>Mở Free Fire</span>
+        </button>
+    </div>
+
+    <script>
+        function playTinhSound() {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.15);
+            } catch (e) {}
+        }
+
+        const items = [
+            ["Aimlock", "aim", "#ff0055", "Aim Assist"],
+            ["Nhẹ Tâm", "nhe", "#00ffcc", "Aim Assist"],
+            ["Ghìm Tâm", "ghim", "#0099ff", "Aim Assist"],
+            ["Lock Center", "lockctr", "#ff00ff", "Aim Assist"],
+            ["Shake Fix", "shake", "#bb00ff", "System Fix"],
+            ["Anti-Glare Center", "glare", "#39ff14", "System Fix"],
+            ["Fix Lặp Đạn", "lap", "#ffea00", "System Fix"],
+            ["Boost FPS", "fps", "#ffffff", "System Fix"]
+        ];
+
+        const container = document.getElementById('menu-content');
+        let currentCat = "";
+
+        items.forEach(([name, id, color, cat]) => {
+            if (currentCat !== cat) container.innerHTML += `<div class="cat">${currentCat = cat}</div>`;
+            container.innerHTML += `
+                <div class="row">
+                    <div class="info"><span>${name}</span><span class="status" id="${id}-st">[OFF]</span></div>
+                    <label class="sw">
+                        <input type="checkbox" id="${id}-tg">
+                        <span class="sd" id="${id}-sd" style="--clr: ${color}"></span>
+                    </label>
+                </div>`;
+        });
+
+        items.forEach(([_, id, color]) => {
+            const tg = document.getElementById(`${id}-tg`), st = document.getElementById(`${id}-st`), sd = document.getElementById(`${id}-sd`);
+            const updateUI = (chk) => {
+                st.textContent = chk ? "[ON]" : "[OFF]"; st.style.color = chk ? color : "#444";
+                sd.style.borderColor = chk ? color : "#333"; sd.style.backgroundColor = chk ? color + "26" : "#1a1d29";
+            };
+            tg.checked = false; updateUI(false);
+            tg.onchange = () => { updateUI(tg.checked); if (tg.checked) playTinhSound(); };
+        });
+
+        const sl = document.getElementById('box-sl'), sv = document.getElementById('sv');
+        sl.value = 50; sl.oninput = () => { sv.textContent = sl.value + "%"; };
+        document.getElementById('btnOpenFF').onclick = () => { playTinhSound(); window.location.href = "freefire://"; };
+    </script>
+</body>
+</html>
